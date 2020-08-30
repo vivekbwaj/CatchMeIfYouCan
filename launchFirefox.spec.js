@@ -11,6 +11,9 @@ const playwright = require ('playwright');
     await page.goto("https://www.catch.com.au/");
     await page.click("div.club-catch");
     await page.waitForLoadState("domcontentloaded"); // The promise resolves after 'load' event.
+    await page.waitForResponse(response => {
+        return response.request().resourceType()==="xhr";
+    })
 
     const odometerChildren = await page.$$("div.odometer div.digit-container");
     let freeDeliveryCounter='';
