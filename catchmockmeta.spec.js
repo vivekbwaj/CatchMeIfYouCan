@@ -9,39 +9,30 @@ const playwright = require ('playwright');
     const context = await browser.newContext(); 
     const page = await context.newPage();
 
-    // await page.route('**',async(route,request) => {
-    //     console.log(request.postData());
-    // });
-
     await page.route('**/meta.json', route => {
         const request = route.request()
-        console.log(request.url(),JSON.stringify(request.headers()));
-        // return route.continue();
+        console.log(request.url());
         return route.fulfill(
             {
                 status: 200,
                 contentType: 'application/json',
-                body: {
+                body: `{
                     "loggedIn":false,
-                    "displayName":Neo,
+                    "displayName":null,
                     "clubActive":false,
                     "flybuysLinked":false,
-                    "cartItemCount":1,
+                    "cartItemCount":100,
                     "wishlistItemCount":null,
                     "messageCount":null
-                 }
+                }`
              }
          );
       });
-
+    //or do it this way
+    // await page.route('**/meta.json', route => route.fulfill({path:"catchmeta.json"}));
     await page.goto("https://www.catch.com.au/");
 
-    await page.click("div.club-catch");
     await page.waitForLoadState("domcontentloaded"); // The promise resolves after 'load' event.
-    // await page.fill("#login_email","vivekbwaj.88@gmail.com");
-    // await page.fill("#login_password","yourpassword");
-    // await page.click("#button-login");
-    // await page.waitForSelector("a[data-testid='wishlist-reference']");
-    await page.waitForTimeout(30000);
+    await page.waitForTimeout(5000);
     await browser.close();
 })();
