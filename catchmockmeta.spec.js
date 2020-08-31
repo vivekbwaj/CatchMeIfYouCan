@@ -36,3 +36,5 @@ const playwright = require ('playwright');
     await page.waitForTimeout(5000);
     await browser.close();
 })();
+
+// What this does ? it sets the cartItem count =100
