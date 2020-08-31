@@ -12,7 +12,8 @@ const playwright = require ('playwright');
     await page.click("a[data-testid='myaccount-reference']");
     await page.waitForLoadState("domcontentloaded"); // The promise resolves after 'load' event.
     await page.fill("#login_email","vivekbwaj.88@gmail.com");
-    await page.fill("#login_password","Neo@1234");
+    await page.fill("#login_password","catchpassword");
+    await page.waitForTimeout(100000);
     await page.click("#button-login");
     await page.waitForSelector("a[data-testid='wishlist-reference']");
     await page.waitForTimeout(30000);
